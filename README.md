@@ -13,3 +13,23 @@ Além disso foi elaborada uma visualização para melhor compreensão do problem
 
 **Nome:** Sara Conceição de S. A. Silva<br>
 **Matrícula:** 16/0144752
+
+## Dependências
+
+Instale o pacote graphviz da sua distribuição. Ex:
+
+``` sh
+# No Fedora
+sudo dnf install graphviz
+
+# Ou no Arch
+sudo pacman -S graphviz
+```
+
+e instale as dependências do python com:
+
+``` sh
+# Ou apenas pip ao invés de pip3 no Arch
+# É melhor instalar na virtualenv ao invés de no usuário
+pip3 install -r requirements.txt --user
+```
