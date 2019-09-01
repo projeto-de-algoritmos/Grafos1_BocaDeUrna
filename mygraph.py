@@ -32,7 +32,6 @@ class MyGraph:
             )
 
             self._drawing.add_node(node)
-            #self._frames.append(self.get_image(self._gif_width,self._gif_height))
             self._adjs[name] = []
             self._marked[name] = False
 
@@ -67,12 +66,16 @@ class MyGraph:
 
     def mark_node(self, name, color):
         node = self.get_node(name)
-
+        
         node.set_style('radial')
         node.set_fillcolor(color)
         node.set_fontcolor('white')
 
         self._marked[name] = True
+        
+        if color is "green":
+            self.add_nodes_cluster("2", name)
+            self.del_node_cluster("1", name)
         
         self._frames.append(self.get_image(self._gif_width,self._gif_height))
 
@@ -90,7 +93,6 @@ class MyGraph:
         to_visit = []
         to_visit.append(name)
         self.mark_node(name, color)
-
         while to_visit:
             visiting = to_visit.pop(0)
 
@@ -115,7 +117,7 @@ class MyGraph:
             format="GIF",
             append_images=self._frames[1:],
             save_all=True,
-            duration=len(self._frames) * 15,
+            duration=len(self._frames) * 50,
             loop=0
         )
 

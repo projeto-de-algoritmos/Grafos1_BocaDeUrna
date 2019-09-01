@@ -26,9 +26,9 @@ if know_votes:
     E = map(int, input("Insira os eleitores que declararam seus votos: ").split())
     graph.add_cluster("2", "Votos conhecidos")
     for v in E:
-        graph.add_nodes_cluster("2", v)
+        #graph.add_nodes_cluster("2", v)
         graph.bfs(v, 'green')
-        graph.del_node_cluster("1", v)
+        #graph.del_node_cluster("1", v)
 
 print(f"Para ter 100% de acurácia é preciso conhecer os votos de {graph.count_not_checked_components('red')} eleitores!")
 
