@@ -1,6 +1,7 @@
 from pydotplus import Dot, Edge, Node, Cluster
 from io import BytesIO
 from PIL import Image
+from os import path
 
 
 class MyGraph:
@@ -10,8 +11,6 @@ class MyGraph:
         self._adjs = {}
         self._marked = {}
         self._frames = []
-        self._gif_width = 300
-        self._gif_height = 300
     
     def add_cluster(self, name, label):
         cluster = Cluster(name)
@@ -21,15 +20,32 @@ class MyGraph:
     def get_node(self, name):
         return self._drawing.get_node(str(name))[0]
 
+    def make_node(self, name):
+        return Node(
+            name,
+            shape='none',
+            style='filled',
+            color='azure2',
+            image='voter.png',
+            labelloc='b',
+            fontname="Times-Roman:bold",
+            fixedsize='true',
+            width=1.0,
+            height=1.0,
+            fontcolor='white',
+            fontsize=15,
+        )
+
+
     def add_nodes(self, *nodes_names):
+        this_path = path.dirname(__file__)
+        this_path = path.join(this_path, 'images', 'voter.png')
+
+        #self._drawing.set_shape_files(this_path)
+        self._drawing.shape_files = [this_path]
+        
         for name in nodes_names:
-            node = Node(
-                name,
-                fixedsize='true',
-                width=1.0,
-                height=1.0,
-                style='filled'
-            )
+            node = self.make_node(name)
 
             self._drawing.add_node(node)
             self._adjs[name] = []
@@ -37,22 +53,16 @@ class MyGraph:
 
     def add_nodes_cluster(self, subgraph_name, *nodes_names):
         for name in nodes_names:
-            node = Node(
-                name,
-                fixedsize='true',
-                width=1.0,
-                height=1.0,
-                style='filled'
-            )
+            node = self.make_node(name)
 
             cluster = self._drawing.get_subgraph("cluster_"+subgraph_name)
             cluster[0].add_node(node)
-            self._frames.append(self.get_image(self._gif_width,self._gif_height))
+            self._frames.append(self.get_image())
 
     def del_node_cluster(self, subgraph_name, node):
             cluster = self._drawing.get_subgraph("cluster_"+subgraph_name)
             cluster[0].del_node(str(node))
-            self._frames.append(self.get_image(self._gif_width,self._gif_height))
+            self._frames.append(self.get_image())
 
     def link(self, src, dst):
         self._adjs[src].append(dst)
@@ -60,31 +70,30 @@ class MyGraph:
 
         src = self.get_node(src)
         dst = self.get_node(dst)
-        
         self._drawing.add_edge(Edge(src, dst))
-        self._frames.append(self.get_image(self._gif_width,self._gif_height))
+
+        self._frames.append(self.get_image())
 
     def mark_node(self, name, color):
         node = self.get_node(name)
-        
-        node.set_style('radial')
+
+        node.set_style('filled')
         node.set_fillcolor(color)
-        node.set_fontcolor('white')
 
         self._marked[name] = True
-        
-        if color is "green":
+
+        if color == "darkolivegreen3":
             self.add_nodes_cluster("2", name)
             self.del_node_cluster("1", name)
         
-        self._frames.append(self.get_image(self._gif_width,self._gif_height))
+        self._frames.append(self.get_image())
 
-    def get_image(self, width, height):
+    def get_image(self):
         img = self._drawing.create_png()
         stream = BytesIO(img)
         img = Image.open(stream)
 
-        return img 
+        return img
 
     def is_node_marked(self, name):
         return self._marked[name]
@@ -117,7 +126,7 @@ class MyGraph:
             format="GIF",
             append_images=self._frames[1:],
             save_all=True,
-            duration=len(self._frames) * 50,
+            duration=len(self._frames) * 15,
             loop=0
         )
 

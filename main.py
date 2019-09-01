@@ -27,10 +27,10 @@ if know_votes:
     graph.add_cluster("2", "Votos conhecidos")
     for v in E:
         #graph.add_nodes_cluster("2", v)
-        graph.bfs(v, 'green')
+        graph.bfs(v, 'darkolivegreen3')
         #graph.del_node_cluster("1", v)
 
-print(f"Para ter 100% de acurácia é preciso conhecer os votos de {graph.count_not_checked_components('red')} eleitores!")
+print(f"Para ter 100% de acurácia é preciso conhecer os votos de {graph.count_not_checked_components('brown2')} eleitores!")
 
 file_name = input("Escolha um nome para o seu gif: ")
 
