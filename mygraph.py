@@ -18,7 +18,14 @@ class MyGraph:
 
     def add_nodes(self, *nodes_names):
         for name in nodes_names:
-            node = Node(name, style='filled')
+            node = Node(
+                name,
+                fixedsize='true',
+                width=1.0,
+                height=1.0,
+                style='filled'
+            )
+
             self._drawing.add_node(node)
             self._frames.append(self.get_image(self._gif_width,self._gif_height))
             self._adjs[name] = []
@@ -50,7 +57,7 @@ class MyGraph:
         stream = BytesIO(img)
         img = Image.open(stream)
 
-        return img.resize((width, height))
+        return img # img.resize((width, height))
 
     def is_node_marked(self, name):
         return self._marked[name]
@@ -77,11 +84,23 @@ class MyGraph:
         return count
     
     def save_gif(self, file_name):
+        self._preprocess_frames()
+
         self._frames[0].save(
             file_name + '.gif',
             format="GIF",
             append_images=self._frames[1:],
             save_all=True,
-            duration=len(self._frames) * 100,
+            duration=len(self._frames) * 15,
             loop=0
         )
+
+    def _preprocess_frames(self):
+        biggest_w = max(i.width for i in self._frames)
+        biggest_h = max(i.height for i in self._frames)
+
+        for i, old_frame in enumerate(self._frames):
+            frame = Image.new('RGBA', (biggest_w, biggest_h),
+                              (255, 255, 255, 255))
+            frame.paste(old_frame)
+            self._frames[i] = frame

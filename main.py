@@ -1,7 +1,7 @@
 from mygraph import MyGraph
 
 def get_graph(voters):
-    graph = MyGraph(graph_type='graph', dpi=300)
+    graph = MyGraph(graph_type='graph', size='7,3.9375!', ratio='fill')
 
     for v in range(1,voters+1):
         graph.add_nodes(v)
