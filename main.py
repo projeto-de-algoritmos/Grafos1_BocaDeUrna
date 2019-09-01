@@ -23,9 +23,9 @@ know_votes = int(input("Insira o número de votos apurados: "))
 if know_votes:
     E = map(int, input("Insira os eleitores que declararam seus votos: ").split())
     for v in E:
-        graph.bfs(v)
+        graph.bfs(v, 'green')
 
-print(f"Para ter 100% de acurácia é preciso conhecer os votos de {graph.count_not_checked_components()} eleitores!")
+print(f"Para ter 100% de acurácia é preciso conhecer os votos de {graph.count_not_checked_components('red')} eleitores!")
 
 file_name = input("Escolha um nome para o seu gif: ")
 

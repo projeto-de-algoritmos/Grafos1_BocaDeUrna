@@ -41,11 +41,11 @@ class MyGraph:
         self._drawing.add_edge(Edge(src, dst))
         self._frames.append(self.get_image(self._gif_width,self._gif_height))
 
-    def mark_node(self, name):
+    def mark_node(self, name, color):
         node = self.get_node(name)
 
         node.set_style('radial')
-        node.set_fillcolor('firebrick')
+        node.set_fillcolor(color)
         node.set_fontcolor('white')
 
         self._marked[name] = True
@@ -57,29 +57,31 @@ class MyGraph:
         stream = BytesIO(img)
         img = Image.open(stream)
 
-        return img # img.resize((width, height))
+        return img 
 
     def is_node_marked(self, name):
         return self._marked[name]
     
-    def bfs(self, name):
+    def bfs(self, name, color):
+        print(color)
         to_visit = []
         to_visit.append(name)
-        self.mark_node(name)
+        self.mark_node(name, color)
 
         while to_visit:
             visiting = to_visit.pop(0)
 
             for v in self._adjs[visiting]:
                 if not self.is_node_marked(v):
-                    self.mark_node(v)
+                    self.mark_node(v, color)
                     to_visit.append(v)
 
-    def count_not_checked_components(self):
+    def count_not_checked_components(self, color):
+        print(color)
         count = 0
         for v in self._adjs.keys():
             if not self.is_node_marked(v):
-                self.bfs(v)
+                self.bfs(v, color)
                 count +=1
         return count
     
