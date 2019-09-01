@@ -1,4 +1,4 @@
-from pydotplus import Dot, Edge, Node
+from pydotplus import Dot, Edge, Node, Cluster
 from io import BytesIO
 from PIL import Image
 
@@ -12,6 +12,11 @@ class MyGraph:
         self._frames = []
         self._gif_width = 300
         self._gif_height = 300
+    
+    def add_cluster(self, name, label):
+        cluster = Cluster(name)
+        cluster.set_label(label)
+        self._drawing.add_subgraph(cluster)
 
     def get_node(self, name):
         return self._drawing.get_node(str(name))[0]
@@ -27,9 +32,28 @@ class MyGraph:
             )
 
             self._drawing.add_node(node)
-            self._frames.append(self.get_image(self._gif_width,self._gif_height))
+            #self._frames.append(self.get_image(self._gif_width,self._gif_height))
             self._adjs[name] = []
             self._marked[name] = False
+
+    def add_nodes_cluster(self, subgraph_name, *nodes_names):
+        for name in nodes_names:
+            node = Node(
+                name,
+                fixedsize='true',
+                width=1.0,
+                height=1.0,
+                style='filled'
+            )
+
+            cluster = self._drawing.get_subgraph("cluster_"+subgraph_name)
+            cluster[0].add_node(node)
+            self._frames.append(self.get_image(self._gif_width,self._gif_height))
+
+    def del_node_cluster(self, subgraph_name, node):
+            cluster = self._drawing.get_subgraph("cluster_"+subgraph_name)
+            cluster[0].del_node(str(node))
+            self._frames.append(self.get_image(self._gif_width,self._gif_height))
 
     def link(self, src, dst):
         self._adjs[src].append(dst)
@@ -63,7 +87,6 @@ class MyGraph:
         return self._marked[name]
     
     def bfs(self, name, color):
-        print(color)
         to_visit = []
         to_visit.append(name)
         self.mark_node(name, color)
@@ -77,7 +100,6 @@ class MyGraph:
                     to_visit.append(v)
 
     def count_not_checked_components(self, color):
-        print(color)
         count = 0
         for v in self._adjs.keys():
             if not self.is_node_marked(v):

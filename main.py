@@ -2,9 +2,11 @@ from mygraph import MyGraph
 
 def get_graph(voters):
     graph = MyGraph(graph_type='graph', size='7,3.9375!', ratio='fill')
+    graph.add_cluster("1", "Votos não conhecidos")
 
     for v in range(1,voters+1):
         graph.add_nodes(v)
+        graph.add_nodes_cluster("1", v)
 
     return graph
 
@@ -22,8 +24,11 @@ know_votes = int(input("Insira o número de votos apurados: "))
 
 if know_votes:
     E = map(int, input("Insira os eleitores que declararam seus votos: ").split())
+    graph.add_cluster("2", "Votos conhecidos")
     for v in E:
+        graph.add_nodes_cluster("2", v)
         graph.bfs(v, 'green')
+        graph.del_node_cluster("1", v)
 
 print(f"Para ter 100% de acurácia é preciso conhecer os votos de {graph.count_not_checked_components('red')} eleitores!")
 
