@@ -151,3 +151,5 @@ class MyGraph:
                               (255, 255, 255, 255))
             frame.paste(old_frame)
             self._frames[i] = frame
+        for i in range(5):
+            self._frames.append(self._frames[-1])

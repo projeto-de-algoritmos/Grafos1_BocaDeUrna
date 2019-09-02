@@ -36,15 +36,31 @@ pip3 install -r requirements.txt --user
 
 ## Demonstração
 
-Para excutar o caso de teste que, está em *input*, execute:
+### Caso de teste grande
+
+Para excutar o caso de teste grande, que está em *input_big*, execute:
 
 ``` sh
-python main.py < input
+python main.py < input_big
 ```
 
-### Resultado
+#### Resultado 
 
-Para visualizar o grafo correspondente ao teste, abra o arquivo *graph.gif* ou *graph.png*
+Para visualizar o grafo correspondente ao teste, abra o arquivo *graph_big.gif*
 
-![graph](./graph.gif)
+![graph_big](./graph_big.gif)
+
+### Caso de teste pequeno
+
+Para excutar o caso de teste pequeno, que está em *input_small*, execute:
+
+``` sh
+python main.py < input_small
+```
+
+#### Resultado 
+
+Para visualizar o grafo correspondente ao teste, abra o arquivo *graph_small.gif* 
+
+![graph_small](./graph_small.gif)
 
