@@ -41,7 +41,6 @@ class MyGraph:
         this_path = path.dirname(__file__)
         this_path = path.join(this_path, 'images', 'voter.png')
 
-        #self._drawing.set_shape_files(this_path)
         self._drawing.shape_files = [this_path]
         
         for name in nodes_names:
@@ -82,10 +81,6 @@ class MyGraph:
 
         self._marked[name] = True
 
-        if color == "darkolivegreen3":
-            self.add_nodes_cluster("2", name)
-            self.del_node_cluster("1", name)
-        
         self._frames.append(self.get_image())
 
     def get_image(self):
@@ -98,10 +93,15 @@ class MyGraph:
     def is_node_marked(self, name):
         return self._marked[name]
     
-    def bfs(self, name, color):
+    def bfs(self, name, color, cluster=None):
         to_visit = []
         to_visit.append(name)
         self.mark_node(name, color)
+        
+        if cluster is not None:
+            self.add_nodes_cluster(cluster, name)
+            self.del_node_cluster("unknows", name)
+
         while to_visit:
             visiting = to_visit.pop(0)
 
@@ -110,11 +110,16 @@ class MyGraph:
                     self.mark_node(v, color)
                     to_visit.append(v)
 
+                    if cluster is not None:
+                        self.add_nodes_cluster(cluster, v)
+                        self.del_node_cluster("unknows", v)
+
     def count_not_checked_components(self, color):
         count = 0
         for v in self._adjs.keys():
             if not self.is_node_marked(v):
-                self.bfs(v, color)
+                self.add_cluster(f"unknows_{count+1}", f"Grupo #{count+1} de votos com valor desconhecido") 
+                self.bfs(v, color, f"unknows_{count+1}")
                 count +=1
         return count
     
