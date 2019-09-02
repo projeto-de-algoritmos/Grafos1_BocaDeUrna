@@ -1,7 +1,7 @@
 from mygraph import MyGraph
 
 def get_graph(voters):
-    graph = MyGraph(graph_type='graph', size='7,3.9375!', ratio='fill')
+    graph = MyGraph(graph_type='graph', size='20,11.25!', ratio='fill')
     graph.add_cluster("unknows", "Votos a serem apurados")
 
     for v in range(1,voters+1):
@@ -33,5 +33,6 @@ print(f"Para ter 100% de acurácia é preciso conhecer os votos de {graph.count_
 file_name = input("Escolha um nome para o seu gif: ")
 
 graph.save_gif(file_name)
+graph.save_img("img")
 
 print(f"Parabéns! Seu gif foi salvo em {file_name}.gif!")

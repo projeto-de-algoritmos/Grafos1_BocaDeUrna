@@ -50,16 +50,17 @@ class MyGraph:
             self._adjs[name] = []
             self._marked[name] = False
 
-    def add_nodes_cluster(self, subgraph_name, *nodes_names):
+    def add_nodes_cluster(self, cluster_name, *nodes_names):
         for name in nodes_names:
             node = self.make_node(name)
 
-            cluster = self._drawing.get_subgraph("cluster_"+subgraph_name)
+            cluster = self._drawing.get_subgraph("cluster_"+cluster_name)
             cluster[0].add_node(node)
-            self._frames.append(self.get_image())
+            if cluster_name is not "unknows":
+                self._frames.append(self.get_image())
 
-    def del_node_cluster(self, subgraph_name, node):
-            cluster = self._drawing.get_subgraph("cluster_"+subgraph_name)
+    def del_node_cluster(self, cluster_name, node):
+            cluster = self._drawing.get_subgraph("cluster_"+cluster_name)
             cluster[0].del_node(str(node))
             self._frames.append(self.get_image())
 
@@ -131,8 +132,14 @@ class MyGraph:
             format="GIF",
             append_images=self._frames[1:],
             save_all=True,
-            duration=len(self._frames) * 15,
+            duration=len(self._frames) * 10,
             loop=0
+        )
+
+    def save_img(self, img_name):
+        self._frames[-1].save(
+            img_name + '.png',
+            format="PNG",
         )
 
     def _preprocess_frames(self):
