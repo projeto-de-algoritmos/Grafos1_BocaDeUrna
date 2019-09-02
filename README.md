@@ -33,3 +33,18 @@ e instale as dependências do python com:
 # É melhor instalar na virtualenv ao invés de no usuário
 pip3 install -r requirements.txt --user
 ```
+
+## Demonstração
+
+Para excutar o caso de teste que, está em *input*, execute:
+
+``` sh
+python main.py < input
+```
+
+### Resultado
+
+Para visualizar o grafo correspondente ao teste, abra o arquivo *graph.gif* ou *graph.png*
+
+![graph](./graph.gif)
+

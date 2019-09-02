@@ -31,8 +31,9 @@ if know_votes:
 print(f"Para ter 100% de acurácia é preciso conhecer os votos de {graph.count_not_checked_components('brown2')} eleitores!")
 
 file_name = input("Escolha um nome para o seu gif: ")
+img_name = "graph" 
 
 graph.save_gif(file_name)
-graph.save_img("img")
+graph.save_img(img_name)
 
 print(f"Parabéns! Seu gif foi salvo em {file_name}.gif!")
