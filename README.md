@@ -36,23 +36,13 @@ pip3 install -r requirements.txt --user
 
 ## Demonstração
 
-### Caso de teste grande
-
-Para excutar o caso de teste grande, que está em *input_big*, execute:
-
-``` sh
-python main.py < input_big
-```
-
-#### Resultado 
-
-Para visualizar o grafo correspondente ao teste, abra o arquivo *graph_big.gif*
-
-![graph_big](./graph_big.gif)
+Ao executar o script são gerados dois arquivos de resultado, um gif,
+representando todo o processo, e uma imagem que ilustra o estado
+final do algoritmos.
 
 ### Caso de teste pequeno
 
-Para excutar o caso de teste pequeno, que está em *input_small*, execute:
+Para executar o caso de teste pequeno, que está em *input_small*, execute:
 
 ``` sh
 python main.py < input_small
@@ -60,7 +50,34 @@ python main.py < input_small
 
 #### Resultado 
 
-Para visualizar o grafo correspondente ao teste, abra o arquivo *graph_small.gif* 
+##### Animação
+
+Para visualizar a animação do grafo correspondente ao teste, abra o arquivo *graph_small.gif* 
 
 ![graph_small](./graph_small.gif)
 
+##### Estado final
+
+Para visualizar o estado final do grafo correspondente ao teste, abra o arquivo *graph_small.png* 
+
+![graph_small_image](./graph_small.png)
+
+### Caso de teste grande
+
+Para executar o caso de teste grande, que está em *input_big*, execute:
+
+``` sh
+python main.py < input_big
+```
+
+#### Resultado 
+
+Para visualizar a animação do grafo correspondente ao teste, abra o arquivo *graph_big.gif*
+
+![graph_big](./graph_big.gif)
+
+##### Estado final
+
+Para visualizar o estado final do grafo correspondente ao teste, abra o arquivo *graph_big.png* 
+
+![graph_big_image](./graph_big.png)
